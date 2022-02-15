@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { answerQuestion } from '../store/slices/game';
 import { finishGame } from '../store/slices/gameInit';
+import Button from '../components/Button';
 
 const GamePage = () => {
   const dispatch = useDispatch();
@@ -33,16 +34,23 @@ const GamePage = () => {
     }
   }, [])
   return (
-    <div>
-      <p>Time left: {timeLeft}</p>
-      <p>Score: {score}</p>
-      <p>{currentQuestionIndex}/10</p>
-      <p dangerouslySetInnerHTML={{__html:currentQuestion}}></p>
-      <button onClick={()=>answerHandler('True')}>True</button>
-      <button onClick={()=>answerHandler('False')}>False</button>
-      <button onClick={endGameHandler}>Quit Game</button>
-
+    <>
+    <div className="flex flex-col items-center relative">
+      <p className="h-20 w-20 flex justify-center items-center border-8 border-orange-500 rounded-full my-4 
+      text-3xl text-orange-500">{timeLeft}</p>
+      <p className="absolute top-4 left-4 text-2xl text-orange-500">Score: {score}</p>
+      <p className="absolute top-4 right-4 text-2xl text-orange-500">Questions: {currentQuestionIndex}/10</p>
+      <p dangerouslySetInnerHTML={{__html:currentQuestion}}
+      className="p-7 bg-white rounded shadow"></p>
+      <div className="flex justify-between w-96 mt-8">
+      <Button onClick={()=>answerHandler('True')}>True</Button>
+      <Button onClick={()=>answerHandler('False')}>False</Button>
+      </div>
     </div>
+    <div className="absolute bottom-4 right-4">
+    <Button onClick={endGameHandler} addClassNames="bg-red-500">Quit Game</Button>
+    </div>
+     </>
   )
 }
 
